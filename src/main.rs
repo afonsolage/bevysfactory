@@ -1,4 +1,14 @@
-use bevy::{prelude::*, render::{RenderPlugin, settings::{WgpuSettings, Backends}}};
+use bevy::{
+    prelude::*,
+    render::{
+        settings::{Backends, WgpuSettings},
+        RenderPlugin,
+    },
+};
+use bevy_editor_pls::EditorPlugin;
+use fly_by_cam::{FlyByCamera, FlyByCameraPlugin};
+
+mod fly_by_cam;
 
 fn main() {
     App::new()
@@ -8,6 +18,8 @@ fn main() {
                 ..default()
             },
         }))
+        .add_plugins(EditorPlugin::default())
+        .add_plugins(FlyByCameraPlugin)
         .add_systems(Startup, setup)
         .run();
 }
@@ -42,8 +54,12 @@ fn setup(
         ..default()
     });
     // camera
-    commands.spawn(Camera3dBundle {
-        transform: Transform::from_xyz(-2.0, 2.5, 5.0).looking_at(Vec3::ZERO, Vec3::Y),
-        ..default()
-    });
+    commands.spawn((
+        Camera3dBundle {
+            transform: Transform::from_xyz(-2.0, 2.5, 5.0).looking_at(Vec3::ZERO, Vec3::Y),
+            ..default()
+        },
+        FlyByCamera,
+        Name::new("Main Camera"),
+    ));
 }
