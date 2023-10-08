@@ -32,18 +32,18 @@ fn main() {
 fn setup(
     mut commands: Commands,
     mut meshes: ResMut<Assets<Mesh>>,
-    mut materials: ResMut<Assets<StandardMaterial>>,
+    mut std_materials: ResMut<Assets<StandardMaterial>>,
 ) {
     // plane
     commands.spawn(PbrBundle {
         mesh: meshes.add(shape::Plane::from_size(5.0).into()),
-        material: materials.add(Color::rgb(0.3, 0.5, 0.3).into()),
+        material: std_materials.add(Color::rgb(0.3, 0.5, 0.3).into()),
         ..default()
     });
     // cube
     commands.spawn(PbrBundle {
         mesh: meshes.add(Mesh::from(shape::Cube { size: 1.0 })),
-        material: materials.add(Color::rgb(0.8, 0.7, 0.6).into()),
+        material: std_materials.add(Color::rgb(0.8, 0.7, 0.6).into()),
         transform: Transform::from_xyz(0.0, 0.5, 0.0),
         ..default()
     });
@@ -66,4 +66,33 @@ fn setup(
         FlyByCamera,
         Name::new("Main Camera"),
     ));
+
+    // Spawn a simple and fake crosshair
+    commands
+        .spawn(NodeBundle {
+            style: Style {
+                width: Val::Percent(100.0),
+                align_items: AlignItems::Center,
+                justify_content: JustifyContent::Center,
+                ..default()
+            },
+            ..default()
+        })
+        .with_children(|parent| {
+            parent.spawn(NodeBundle {
+                style: Style {
+                    width: Val::Px(8.0),
+                    height: Val::Px(8.0),
+                    border: UiRect::all(Val::Px(1.0)),
+                    // horizontally center child text
+                    justify_content: JustifyContent::Center,
+                    // vertically center child text
+                    align_items: AlignItems::Center,
+                    ..default()
+                },
+                border_color: BorderColor(Color::BLACK),
+                background_color: Color::rgba(1.0, 1.0, 1.0, 0.1).into(),
+                ..default()
+            });
+        });
 }
