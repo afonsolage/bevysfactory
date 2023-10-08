@@ -7,8 +7,10 @@ use bevy::{
 };
 use bevy_editor_pls::EditorPlugin;
 use fly_by_cam::{FlyByCamera, FlyByCameraPlugin};
+use resources::ResourcesPlugin;
 
 mod fly_by_cam;
+mod resources;
 
 fn main() {
     App::new()
@@ -20,7 +22,9 @@ fn main() {
         }))
         .add_plugins(EditorPlugin::default())
         .add_plugins(FlyByCameraPlugin)
+        .add_plugins(ResourcesPlugin)
         .add_systems(Startup, setup)
+        .add_systems(Update, bevy::window::close_on_esc)
         .run();
 }
 
