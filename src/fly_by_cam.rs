@@ -199,7 +199,7 @@ fn grab_mouse(
     mut windows: Query<&mut Window>,
 ) {
     if let Ok(mut window) = windows.get_single_mut() {
-        window.cursor.visible = false;
+        // window.cursor.visible = false;
         window.cursor.grab_mode = bevy::window::CursorGrabMode::Locked;
     }
 }

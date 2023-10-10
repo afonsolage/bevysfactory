@@ -7,6 +7,7 @@ use bevy::{
     },
 };
 use bevy_editor_pls::EditorPlugin;
+use bevy_xpbd_3d::prelude::*;
 use fly_by_cam::{FlyByCamera, FlyByCameraPlugin};
 use resources::ResourcesPlugin;
 
@@ -21,11 +22,12 @@ fn main() {
                 ..default()
             },
         }))
+        .add_plugins(PhysicsPlugins::default())
         .add_plugins(EditorPlugin::default())
         .add_plugins(FlyByCameraPlugin)
         .add_plugins(ResourcesPlugin)
         .add_systems(Startup, setup)
-        .add_systems(Update, bevy::window::close_on_esc)
+        .add_systems(Update, (bevy::window::close_on_esc, on_ground_click))
         .run();
 }
 
@@ -36,9 +38,12 @@ fn setup(
     mut std_materials: ResMut<Assets<StandardMaterial>>,
 ) {
     // ground plane
+    let ground_mesh = shape::Plane::from_size(50.0).into();
     commands.spawn((
+        RigidBody::Static,
+        Collider::trimesh_from_bevy_mesh(&ground_mesh).expect("Valid plane mesh"),
         PbrBundle {
-            mesh: meshes.add(shape::Plane::from_size(50.0).into()),
+            mesh: meshes.add(ground_mesh),
             material: std_materials.add(StandardMaterial {
                 base_color: Color::rgb(0.1, 0.7, 0.1).into(),
                 metallic: 0.0,
@@ -49,7 +54,7 @@ fn setup(
         },
     ));
 
-    // center cube
+    // center marker
     commands.spawn(PbrBundle {
         mesh: meshes.add(Mesh::from(shape::Cylinder {
             height: 0.2,
@@ -84,6 +89,7 @@ fn setup(
         .into(),
         ..default()
     });
+
     // ambient light
     commands.insert_resource(AmbientLight {
         color: Color::WHITE,
@@ -128,4 +134,42 @@ fn setup(
                 ..default()
             });
         });
+}
+
+#[derive(Component)]
+pub struct CameraRayCaster;
+
+fn on_ground_click(
+    mouse_btn: Res<Input<MouseButton>>,
+    q_camera: Query<&Transform, With<FlyByCamera>>,
+    spatial_query: SpatialQuery,
+    mut commands: Commands,
+    mut meshes: ResMut<Assets<Mesh>>,
+    mut materials: ResMut<Assets<StandardMaterial>>,
+) {
+    if mouse_btn.just_pressed(MouseButton::Left) {
+        if let Ok(camera) = q_camera.get_single() {
+            if let Some(first_hit) = spatial_query.cast_ray(
+                camera.translation,
+                camera.forward(),
+                1000.0,
+                true,
+                SpatialQueryFilter::default(),
+            ) {
+                let spawn_location =
+                    camera.translation + camera.forward() * first_hit.time_of_impact;
+
+                commands.spawn(PbrBundle {
+                    mesh: meshes.add(Mesh::from(shape::Cube { size: 1.0 })),
+                    material: materials.add(Color::rgb(0.8, 0.7, 0.6).into()),
+                    transform: Transform::from_translation(
+                        spawn_location + Vec3::new(0.0, 0.5, 0.0),
+                    ),
+                    ..default()
+                });
+            }
+        } else {
+            println!("No camera found!");
+        }
+    }
 }
