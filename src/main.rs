@@ -9,7 +9,7 @@ use bevy::{
 use bevy_editor_pls::EditorPlugin;
 use bevy_xpbd_3d::prelude::*;
 use fly_by_cam::{FlyByCamera, FlyByCameraPlugin};
-use resources::ResourcesPlugin;
+use resources::{ResourceNode, ResourcePath, ResourcesPlugin};
 
 mod fly_by_cam;
 mod resources;
@@ -22,6 +22,7 @@ fn main() {
                 ..default()
             },
         }))
+        .init_resource::<LastNode>()
         .add_plugins(PhysicsPlugins::default())
         .add_plugins(EditorPlugin::default())
         .add_plugins(FlyByCameraPlugin)
@@ -139,13 +140,18 @@ fn setup(
 #[derive(Component)]
 pub struct CameraRayCaster;
 
+#[derive(Resource, Default)]
+pub struct LastNode(Option<Entity>);
+
 fn on_ground_click(
     mouse_btn: Res<Input<MouseButton>>,
     q_camera: Query<&Transform, With<FlyByCamera>>,
     spatial_query: SpatialQuery,
+    q_transforms: Query<&Transform, With<ResourceNode>>,
     mut commands: Commands,
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<StandardMaterial>>,
+    mut last_node_res: ResMut<LastNode>,
 ) {
     if mouse_btn.just_pressed(MouseButton::Left) {
         if let Ok(camera) = q_camera.get_single() {
@@ -159,14 +165,28 @@ fn on_ground_click(
                 let spawn_location =
                     camera.translation + camera.forward() * first_hit.time_of_impact;
 
-                commands.spawn(PbrBundle {
-                    mesh: meshes.add(Mesh::from(shape::Cube { size: 1.0 })),
-                    material: materials.add(Color::rgb(0.8, 0.7, 0.6).into()),
-                    transform: Transform::from_translation(
-                        spawn_location + Vec3::new(0.0, 0.5, 0.0),
-                    ),
-                    ..default()
-                });
+                let new_node_translation = spawn_location + Vec3::new(0.0, 0.5, 0.0);
+
+                let entity = commands
+                    .spawn((
+                        PbrBundle {
+                            mesh: meshes.add(Mesh::from(shape::Cube { size: 1.0 })),
+                            material: materials.add(Color::rgb(0.8, 0.7, 0.6).into()),
+                            transform: Transform::from_translation(new_node_translation),
+                            ..default()
+                        },
+                        ResourceNode,
+                    ))
+                    .id();
+
+                if let Some(last_node) = last_node_res.0.replace(entity) {
+                    if let Ok(last_node_transform) = q_transforms.get(last_node) {
+                        commands.spawn(ResourcePath(
+                            last_node_transform.translation,
+                            new_node_translation,
+                        ));
+                    }
+                }
             }
         } else {
             println!("No camera found!");
