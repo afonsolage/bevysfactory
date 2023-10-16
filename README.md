@@ -1,11 +1,11 @@
-  # Bevysfactory
+# Bevysfactory
 
 An exploration, factorying, strategy and arpg made with [Bevy Engine](https://github.com/bevyengine/bevy).
 
 # Overview
 
 The main focus is to have a resource extraction/factory builder game, but which actually gives meaning to
-the sources extracted. The main problem which I see with many factory games, at least to me, is that you
+the resources extracted. The main problem which I see with many factory games, at least for me, is that you
 don't have any meaningfull use for what you have built, aside from the satisfaction, lore or some mission.
 
 So I want to have a game loop which involves exploring to find resources, building to extract resources, craft
@@ -22,23 +22,22 @@ face more difficult areas, which gives more and better resources.
 
 The game will have a low-poly 3D art style, a bit like Albion but more vibrant colors and a bit of toon-shader
 
-## 
-
 # Exploration
 
 The world will be divided in instanced maps, for performance reasons and also to make it easy for players to reason
 about where to go next, since each map will have it's own tier, resources and difficult level.
 
 The resources on each map will be determined by the biome, enemies level and some randomness: Not every map will have
-the same amount and type of resources.
+the same amount and type of resources, so finding the best balance between enemies and resources will be one of the 
+selling points of exploration.
 
 ## Resources
 Players will look for tree kind of resources:
  - __Non-living organic__: Plants, trees, mushrooms, bushes and anything that is a non-living organic being;
- - __Living organic__: mammals, insects, reptiles, fishes...dragons?...maybe;
+ - __Living organic__: Mammals, Insects, Reptiles, Fishes...dragons?...maybe;
  - __Inorganic__: rock, iron, sand, mud, water, oil and anything that does't try to run or figth back;
 
-More Resources will be added in the futuro to icnrease gameplay variety.
+More Resources will be added in the future to increase gameplay variety.
 
 ## Resource quality
 Each resource will have a quality indicator, which determines how good that resource is for processing. Resource
@@ -53,7 +52,7 @@ have slightly different quality, but each node will always yield the same qualit
 When discoverying a new map, it may contain different POIs, which offers additional features to the map. Here 
 are some examples:
  - __Bandit camp__: Usually protecting some resource node or blocking some road.
- - __Den__: Contains some living organic boss which yields high quality resource once killed.
+ - __Den/Nest__: Contains some living organic boss which yields high quality resource once killed.
  - __Ruins__: May have some unique/high quality loot or just a trap.
  - __Settlements/Cities__: Some NPC controlled city/settlement which allows player to trade with.
 
@@ -72,35 +71,86 @@ tier map is generated.
 
 # Factorying
 
->Since I'm not english native speaker, as you can tell, I feel no shame in creating new therminology.
+>Since I'm not native english speaker, as you can tell, I feel no shame in creating new therminology.
 >Factorying refers to the factory building mechanic 
 
-Building a factory needs to be one of the strong points of this game, so some elements needs to be exists in order to
+Building a factory needs to be one of the strong points of this game, so some elements needs to exists in order to
 make building a factory fun and enjoyable:
- - __No refound cost__: Destroying a player-owned building must refound 100% of resources, so players won't have any
-kind of fear while trying new things;
+ - __No refound cost__: Destroying a player-owned building must refound 100% of it's resources, so players won't have
+any kind of fear while trying new things;
  - __OCD friendly placement__: Most factory players have some degree of OCD and like things placed at right corner, 
-well aligned and with clicking sound when everything fits together, so having tools to help to align things is a must.
+well aligned and with a clicking sound when everything fits together, so having tools to help to align things is a must.
 Those tools must be optional, since also there are the chaotic-organization players;
  - __Clipping is ok__: The game should allow players to do clipping (non-blocking collisions), but alert about
 the clipping when placing objects;
- - __Belts must show items__: Players must be able to see their items flowing from one place to another, since this
+ - __Visible items flow__: Players must be able to see their items flowing from one place to another, since this
 gives a great sense of proudness and also helps to mitigate factory problems. This may impose some performance
 problems, but nothing that Bevy + Rust shouldn't handle.
  - __3D Factory__: The game should allow player to build their factories in all 3 dimensions, allowing them to
 interact with montains, cliffs, hills and many more obstacles.
  - __Optional floor, walls and roofs__: This may seems obvios, but there should be optional floors, walls and roofs. 
 The game should give no bonus or penalities in using them, this should be visually appealing only.
+ - __Instant Building__: There won't be any major cooldown or waiting time to create Factory Buildings, since the major
+ limiting point will be the extractors, transporters and belts.
 
-### Extractos
+### Quality
+Another important aspect of the Factory is how it's tied to resource quality, since each factory building will have also
+a quality indicator, which will determine how fast it works or the storage capacity, for instance.
+
+The quality indicator should have a higher threshould, so Players won't have to rebuild their factories whenever a new
+resource now, which a slight better quality is discovered. Quality indicator should require significant better resources
+but offer also significant better bonuses.
+
+### Extractors
+Extractors will generate resource when placed on a resource spot. This resource spot can be anything, depending on
+extracted resource and map. 
+
+- __Mining__: Will be able to extract iron, rocks, sulphur and most solid inorganic resources;
+- __Water__: Will pump water from lakes and rivers;;
+- __Farm Plot__: Will act like a farm plot, but automatically havest crops and yield it's resources;
+- __Farm Livestock__: Will act like a farm of livestock, which will yield it's resource automatically;
 
 ### Transporters
+Mainly moves resources from one node to another. Transporters can work on different land types:
+
+- __Horizontal Belts__: Will move resource horizontally, having at most 45º degree angle, using a conveyor belt;
+- __Vertical Belts__: Will move resource horizontally, having at minimum 45º degree angle, using a conveyor belt;
+- __Pipe Tube__: Will move liquid resources in any direction. May require __Pumper__ to enable liquid flow to higher
+altitudes;
+
+Other types of transporters may be added in the future.
+
+### Controllers
+Controls item flow between nodes (storages, transporters, processors and so on). The main idea is to give Players some
+controllers to have a better automation and more intelligent automation. Most controllers are optional, but enables
+more advanced control over the built factory.
+
+- __Spliter__: Split incoming resources into many outputs;
+- __Merger__: Merge many incoming resources into a single output;
+- __Overflow Gate__: Redirect output to another output whenever there is overflow of resources;
+- __Limiter__: Limits the amount of resources in a output, redirecting to another output when the limit is reached;
+
+Other types of controllers will be added in the future.
 
 ### Processors
+Accepts one or more resources as input and produces an output with optional by product. Processors are the main point
+of the factory building, since they enable using the gathered resources and creating resources for others processors
+or some item, food, equipment or anything to be used by player.
+
+Processors have mainly four types, in order of complexity:
+
+- __Single Input Single Output__: SISO, the most basic one and create basic products, like iron ingots or gravel;
+- __Multiple Input Single Output__: MISO, combine multiple inputs to create a single one, like steel ingots or ciment;
+- __Single Input Multiple Output__: SIMO, breakdown the input into multiple outputs, like rock yeilding both sand and 
+gravel;
+- __Multiple Input Multiple Output__: MIMO, create most advanced products, like weapons, rare resources and so on.
 
 ### Storages
+Containers which will storage raw or processed resources. Every storage must have one input and one output, at least,
+which will allow Players to create buffers around the factory.
 
 ### Misc
+Additional components like floors, walls, roofs and lights.
 
 # PvEing
 
