@@ -153,15 +153,40 @@ which will allow Players to create buffers around the factory.
 Additional components like floors, walls, roofs and lights.
 
 # PvEing
+The combat will be required in order to explore new maps and advance into the game, acquiring better resources and
+building better quality factories, which in turn, will yield better combat items and gear.
+
+Game combat won't be advanced like a Souls Game, but more a mid paced game like Valheim.
 
 ### Melee combat
+Melee combat will be based on taking damage and hitting back, dodge or parry timming won't be required.
 
 ### Ranged combat
+Ranged combat won't have auto aim or projectile path line, but will have a fixed cross aim and the drop will be low,
+mostly based on weapon range, after the range is reached, the projectile drop will increase greatly.
 
 ### Support
+There will be some form of support skills and items, like healing potions/bandages, food buffs and so on, so this will
+enable players to prepare for boss nor harder battles.
 
 ### AI
+The enemy and ally AI will be almost the same, having no variation on difficulty, the enemy/ally will have better gear,
+stats and so on.
+
+The AI shouldn't be nothing advanced and have some basic behaviors, like passive, defensive, aggresive, but also flee
+from combat if it is heavily injured (but not always tho, to avoid Players running across the map to give the final hit)
 
 ### Looting
+Enemies (and allies) when dead, will yield some loot. Some resources will be yielded only by looting, to give players
+a reason to go out and explore, aside from finding better resources spots.
 
-### RTS style or Companion-like?
+But there won't be any major game mechanic that will be only achiavable through looting, only minor/mid things.
+
+
+### Companions
+Players will be able to summon/traing companions, which will be AI-powered NPCs that have some basic commands to obey:
+
+- __Follow__: Follows the player and will engaje battle whenever player also engajes.
+- __Stay__: Will stay in position and defend itself, won't engaje in battle unless attacked.
+- __Patrol__: Guard an area path and will attack any hostile target that it founds.
+- __Attack__: Attack a target and engaje in battle. Will stop only if dead or no more hostile target nearby.
