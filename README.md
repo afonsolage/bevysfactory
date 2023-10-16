@@ -6,7 +6,7 @@ An exploration, factorying, strategy and arpg made with [Bevy Engine](https://gi
 
 The main focus is to have a resource extraction/factory builder game, but which actually gives meaning to
 the resources extracted. The main problem which I see with many factory games, at least for me, is that you
-don't have any meaningfull use for what you have built, aside from the satisfaction, lore or some mission.
+don't have any meaningful use for what you have built, aside from the satisfaction, lore or some mission.
 
 So I want to have a game loop which involves exploring to find resources, building to extract resources, craft
 new weapons/gear/army units to defend, explore new areas, repeat.
@@ -35,43 +35,43 @@ selling points of exploration.
 Players will look for tree kind of resources:
  - __Non-living organic__: Plants, trees, mushrooms, bushes and anything that is a non-living organic being;
  - __Living organic__: Mammals, Insects, Reptiles, Fishes...dragons?...maybe;
- - __Inorganic__: rock, iron, sand, mud, water, oil and anything that does't try to run or figth back;
+ - __Inorganic__: rock, iron, sand, mud, water, oil and anything that does't try to run or fight back;
 
-More Resources will be added in the future to increase gameplay variety.
+More Resources will be added in the future to increase game play variety.
 
 ## Resource quality
 Each resource will have a quality indicator, which determines how good that resource is for processing. Resource
 quality will be calculated differently for each resource type:
  - __Non-living organic__: Based on map tier + a random factor which will be calculated at extraction, so on the same
-map, two threes can yeild slightly different quality.
+map, two threes can yield slightly different quality.
  - __Living organic__: Will be based on entity level, which is determined using other formula, based on Battle mechanic
  - __Inorganic__: Based on map tier + a random factor for each resource node, so on the same map, two iron nodes may
 have slightly different quality, but each node will always yield the same quality for each resource extracted.
 
 ## POI
-When discoverying a new map, it may contain different POIs, which offers additional features to the map. Here 
+When discovering a new map, it may contain different POIs, which offers additional features to the map. Here 
 are some examples:
  - __Bandit camp__: Usually protecting some resource node or blocking some road.
  - __Den/Nest__: Contains some living organic boss which yields high quality resource once killed.
  - __Ruins__: May have some unique/high quality loot or just a trap.
  - __Settlements/Cities__: Some NPC controlled city/settlement which allows player to trade with.
 
-More POIs will be added in the future to increase gameplay variety.
+More POIs will be added in the future to increase game play variety.
 
 ## Maps
 
-Each map will have a fixed size, with procerually generated content, and will be conected to other maps. Not every
+Each map will have a fixed size, with procedurally generated content, and will be connected to other maps. Not every
 map corner will have a connection to a neighbor map, giving players a maze-like challenging if they wanna reach other
-maps, but the algorithm must ensure every map is reacheable somehow.
+maps, but the algorithm must ensure every map is reachable somehow.
 
 There won't be any form of terraforming, to simply things.
 
-The first initial map will be at minimum tier and the futher player moves from the center, more likely it is to a high
+The first initial map will be at minimum tier and the further player moves from the center, more likely it is to a high
 tier map is generated.
 
 # Factorying
 
->Since I'm not native english speaker, as you can tell, I feel no shame in creating new therminology.
+>Since I'm not native english speaker, as you can tell, I feel no shame in creating new terminology.
 >Factorying refers to the factory building mechanic 
 
 Building a factory needs to be one of the strong points of this game, so some elements needs to exists in order to
@@ -87,8 +87,8 @@ the clipping when placing objects;
 gives a great sense of proudness and also helps to mitigate factory problems. This may impose some performance
 problems, but nothing that Bevy + Rust shouldn't handle.
  - __3D Factory__: The game should allow player to build their factories in all 3 dimensions, allowing them to
-interact with montains, cliffs, hills and many more obstacles.
- - __Optional floor, walls and roofs__: This may seems obvios, but there should be optional floors, walls and roofs. 
+interact with mountains, cliffs, hills and many more obstacles.
+ - __Optional floor, walls and roofs__: This may seems obvious, but there should be optional floors, walls and roofs. 
 The game should give no bonus or penalities in using them, this should be visually appealing only.
  - __Instant Building__: There won't be any major cooldown or waiting time to create Factory Buildings, since the major
  limiting point will be the extractors, transporters and belts.
@@ -97,7 +97,7 @@ The game should give no bonus or penalities in using them, this should be visual
 Another important aspect of the Factory is how it's tied to resource quality, since each factory building will have also
 a quality indicator, which will determine how fast it works or the storage capacity, for instance.
 
-The quality indicator should have a higher threshould, so Players won't have to rebuild their factories whenever a new
+The quality indicator should have a higher threshold, so Players won't have to rebuild their factories whenever a new
 resource now, which a slight better quality is discovered. Quality indicator should require significant better resources
 but offer also significant better bonuses.
 
@@ -107,7 +107,7 @@ extracted resource and map.
 
 - __Mining__: Will be able to extract iron, rocks, sulphur and most solid inorganic resources;
 - __Water__: Will pump water from lakes and rivers;;
-- __Farm Plot__: Will act like a farm plot, but automatically havest crops and yield it's resources;
+- __Farm Plot__: Will act like a farm plot, but automatically harvest crops and yield it's resources;
 - __Farm Livestock__: Will act like a farm of livestock, which will yield it's resource automatically;
 
 ### Transporters
@@ -125,7 +125,7 @@ Controls item flow between nodes (storages, transporters, processors and so on).
 controllers to have a better automation and more intelligent automation. Most controllers are optional, but enables
 more advanced control over the built factory.
 
-- __Spliter__: Split incoming resources into many outputs;
+- __Splitter__: Split incoming resources into many outputs;
 - __Merger__: Merge many incoming resources into a single output;
 - __Overflow Gate__: Redirect output to another output whenever there is overflow of resources;
 - __Limiter__: Limits the amount of resources in a output, redirecting to another output when the limit is reached;
@@ -140,8 +140,8 @@ or some item, food, equipment or anything to be used by player.
 Processors have mainly four types, in order of complexity:
 
 - __Single Input Single Output__: SISO, the most basic one and create basic products, like iron ingots or gravel;
-- __Multiple Input Single Output__: MISO, combine multiple inputs to create a single one, like steel ingots or ciment;
-- __Single Input Multiple Output__: SIMO, breakdown the input into multiple outputs, like rock yeilding both sand and 
+- __Multiple Input Single Output__: MISO, combine multiple inputs to create a single one, like steel ingots or cement;
+- __Single Input Multiple Output__: SIMO, breakdown the input into multiple outputs, like rock yielding both sand and 
 gravel;
 - __Multiple Input Multiple Output__: MIMO, create most advanced products, like weapons, rare resources and so on.
 
@@ -159,7 +159,7 @@ building better quality factories, which in turn, will yield better combat items
 Game combat won't be advanced like a Souls Game, but more a mid paced game like Valheim.
 
 ### Melee combat
-Melee combat will be based on taking damage and hitting back, dodge or parry timming won't be required.
+Melee combat will be based on taking damage and hitting back, dodge or parry timing won't be required.
 
 ### Ranged combat
 Ranged combat won't have auto aim or projectile path line, but will have a fixed cross aim and the drop will be low,
@@ -173,20 +173,20 @@ enable players to prepare for boss nor harder battles.
 The enemy and ally AI will be almost the same, having no variation on difficulty, the enemy/ally will have better gear,
 stats and so on.
 
-The AI shouldn't be nothing advanced and have some basic behaviors, like passive, defensive, aggresive, but also flee
+The AI shouldn't be nothing advanced and have some basic behaviors, like passive, defensive, aggressive, but also flee
 from combat if it is heavily injured (but not always tho, to avoid Players running across the map to give the final hit)
 
 ### Looting
 Enemies (and allies) when dead, will yield some loot. Some resources will be yielded only by looting, to give players
 a reason to go out and explore, aside from finding better resources spots.
 
-But there won't be any major game mechanic that will be only achiavable through looting, only minor/mid things.
+But there won't be any major game mechanic that will be only achievable through looting, only minor/mid things.
 
 
 ### Companions
-Players will be able to summon/traing companions, which will be AI-powered NPCs that have some basic commands to obey:
-
-- __Follow__: Follows the player and will engaje battle whenever player also engajes.
-- __Stay__: Will stay in position and defend itself, won't engaje in battle unless attacked.
+Players will be able to summon/train companions, which will be AI-powered NPCs that have some basic commands to obey:
+S
+- __Follow__: Follows the player and will engage battle whenever player also engages.
+- __Stay__: Will stay in position and defend itself, won't engage in battle unless attacked.
 - __Patrol__: Guard an area path and will attack any hostile target that it founds.
-- __Attack__: Attack a target and engaje in battle. Will stop only if dead or no more hostile target nearby.
+- __Attack__: Attack a target and engage in battle. Will stop only if dead or no more hostile target nearby.
