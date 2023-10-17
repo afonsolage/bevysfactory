@@ -190,3 +190,15 @@ S
 - __Stay__: Will stay in position and defend itself, won't engage in battle unless attacked.
 - __Patrol__: Guard an area path and will attack any hostile target that it founds.
 - __Attack__: Attack a target and engage in battle. Will stop only if dead or no more hostile target nearby.
+
+
+## v0.1.0
+
+- [ ] Create random resources spots on a flat map (#2);
+- [ ] Enable extractor placement on resources spots (#3);
+- [ ] Extract resources from resources spots using extractors (#4);
+- [ ] Show UI with extracted resources (#5);
+- [ ] Place a storage (#6);
+- [ ] Place a transporter belt between extractor and storage (#7);
+- [ ] Move resources from extractor to storage (#8);
+- [ ] Show items moving while on transporters (#9); 
