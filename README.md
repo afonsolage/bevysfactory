@@ -192,13 +192,13 @@ S
 - __Attack__: Attack a target and engage in battle. Will stop only if dead or no more hostile target nearby.
 
 
-## v0.1.0
+## v0.1.0 - Basic extractors
 
 - [ ] Create random resources spots on a flat map [#2](https://github.com/afonsolage/bevysfactory/issues/2);
 - [ ] Enable extractor placement on resources spots [#3](https://github.com/afonsolage/bevysfactory/issues/3);
 - [ ] Extract resources from resources spots using extractors [#4](https://github.com/afonsolage/bevysfactory/issues/4);
 - [ ] Show UI with extracted resources [#5](https://github.com/afonsolage/bevysfactory/issues/5);
-- [ ] Place a storage (#6)[#6](https://github.com/afonsolage/bevysfactory/issues/6);
+- [ ] Place a storage [#6](https://github.com/afonsolage/bevysfactory/issues/6);
 - [ ] Place a transporter belt between extractor and storage [#7](https://github.com/afonsolage/bevysfactory/issues/7);
 - [ ] Move resources from extractor to storage [#8](https://github.com/afonsolage/bevysfactory/issues/8);
-- [ ] Show items moving while on transporters [#9](https://github.com/afonsolage/bevysfactory/issues/9); 
+- [ ] Show items moving while on transporters [#9](https://github.com/afonsolage/bevysfactory/issues/9);
