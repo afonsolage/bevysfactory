@@ -194,7 +194,7 @@ S
 
 ## v0.1.0 - Basic extractors
 
-- [ ] Create random resources spots on a flat map [#2](https://github.com/afonsolage/bevysfactory/issues/2);
+- [X] Create random resources spots on a flat map [#2](https://github.com/afonsolage/bevysfactory/issues/2);
 - [ ] Enable extractor placement on resources spots [#3](https://github.com/afonsolage/bevysfactory/issues/3);
 - [ ] Extract resources from resources spots using extractors [#4](https://github.com/afonsolage/bevysfactory/issues/4);
 - [ ] Show UI with extracted resources [#5](https://github.com/afonsolage/bevysfactory/issues/5);
