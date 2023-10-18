@@ -10,6 +10,13 @@ impl Plugin for ResourcesPlugin {
 }
 
 #[derive(Component)]
+pub enum ResourceSpot {
+    STONE,
+    IRON,
+    COPPER,
+}
+
+#[derive(Component)]
 pub struct ResourcePath(pub Vec3, pub Vec3);
 
 impl ResourcePath {
