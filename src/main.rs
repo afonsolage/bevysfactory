@@ -11,9 +11,9 @@ use fly_by_cam::{FlyByCamera, FlyByCameraPlugin};
 use map::MapPlugin;
 use resources::{ResourceNode, ResourcePath, ResourcesPlugin};
 
-mod fly_by_cam;
-mod map;
-mod resources;
+pub mod fly_by_cam;
+pub mod map;
+pub mod resources;
 
 fn main() {
     App::new()
