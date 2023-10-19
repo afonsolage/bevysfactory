@@ -29,7 +29,14 @@ fn main() {
         .add_plugins(FlyByCameraPlugin)
         .add_plugins((ResourcesPlugin, MapPlugin))
         .add_systems(Startup, setup)
-        .add_systems(Update, (bevy::window::close_on_esc, on_ground_click))
+        .add_systems(
+            Update,
+            (
+                bevy::window::close_on_esc,
+                on_ground_click,
+                add_resource_label,
+            ),
+        )
         .run();
 }
 
@@ -44,6 +51,8 @@ fn setup(mut commands: Commands) {
         FlyByCamera,
         Name::new("Main Camera"),
     ));
+
+    //commands.spawn(Camera2dBundle::default());
 
     // Spawn a simple and fake crosshair
     commands
@@ -114,6 +123,7 @@ fn on_ground_click(
                             ..default()
                         },
                         ResourceNode,
+                        Name::new("ResourceNode"),
                     ))
                     .id();
 
@@ -129,5 +139,28 @@ fn on_ground_click(
         } else {
             println!("No camera found!");
         }
+    }
+}
+
+#[derive(Component)]
+pub struct ResourceLabel;
+
+fn add_resource_label(
+    mut commands: Commands,
+    q_added_labels: Query<&Name, Added<ResourceNode>>,
+    asset_server: Res<AssetServer>,
+) {
+    for name in &q_added_labels {
+        commands.spawn((
+            TextBundle::from_section(
+                name.as_str(),
+                TextStyle {
+                    font: asset_server.load("fonts/FiraSans-Bold.ttf"),
+                    font_size: 100.0,
+                    color: Color::WHITE,
+                },
+            ),
+            ResourceLabel,
+        ));
     }
 }
