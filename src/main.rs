@@ -5,7 +5,8 @@ use bevy::{
         RenderPlugin,
     },
 };
-use bevy_editor_pls::EditorPlugin;
+use bevy_inspector_egui::quick::WorldInspectorPlugin;
+use bevy_mod_billboard::prelude::*;
 use bevy_xpbd_3d::prelude::*;
 use fly_by_cam::{FlyByCamera, FlyByCameraPlugin};
 use map::MapPlugin;
@@ -25,7 +26,8 @@ fn main() {
         }))
         .init_resource::<LastNode>()
         .add_plugins(PhysicsPlugins::default())
-        .add_plugins(EditorPlugin::default())
+        .add_plugins(WorldInspectorPlugin::new())
+        .add_plugins(BillboardPlugin)
         .add_plugins(FlyByCameraPlugin)
         .add_plugins((ResourcesPlugin, MapPlugin))
         .add_systems(Startup, setup)
@@ -143,24 +145,31 @@ fn on_ground_click(
 }
 
 #[derive(Component)]
-pub struct ResourceLabel;
+struct ResourceNameLabel;
 
 fn add_resource_label(
     mut commands: Commands,
-    q_added_labels: Query<&Name, Added<ResourceNode>>,
+    q_added_resources: Query<(Entity, &Name), Added<ResourceNode>>,
     asset_server: Res<AssetServer>,
 ) {
-    for name in &q_added_labels {
-        commands.spawn((
-            TextBundle::from_section(
-                name.as_str(),
-                TextStyle {
-                    font: asset_server.load("fonts/FiraSans-Bold.ttf"),
-                    font_size: 100.0,
-                    color: Color::WHITE,
+    for (e, name) in &q_added_resources {
+        commands.entity(e).with_children(|c| {
+            c.spawn((
+                BillboardTextBundle {
+                    transform: Transform::from_translation(Vec3::new(0.0, 1.0, 0.0))
+                        .with_scale(Vec3::splat(0.0085)),
+                    text: Text::from_section(
+                        name.as_str(),
+                        TextStyle {
+                            font_size: 50.0,
+                            font: asset_server.load("fonts/FiraSans-Bold.ttf"),
+                            color: Color::ORANGE,
+                        },
+                    ),
+                    ..default()
                 },
-            ),
-            ResourceLabel,
-        ));
+                ResourceNameLabel,
+            ));
+        });
     }
 }
